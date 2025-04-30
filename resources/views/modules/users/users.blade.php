@@ -12,8 +12,9 @@
                         Agregar Usuario
                     </button>
                 </div>
-                <div class="col-md-12" style='margin-top: 2em;'>
-                    <table id="tableUsurios" class="display" style="width:100%">
+                <div class="col-md-12" style='margin-top: 2em;  margin-bottom: 5em;'>
+                    <table id="tblActiveUsers" class="table table-striped table-hover "
+                        style="width:90%; margin-bottom: 5em;" name="miTabla">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -24,19 +25,47 @@
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {{-- @foreach ($usuarios as $usuario)
-                                <tr>
-                                    <td>{{ $usuario->nombre }}</td>
-                                    <td>{{ $usuario->email }}</td>
-                                    <td>{{ $usuario->rol }}</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-primary">Editar</button>
-                                        <button class="btn btn-sm btn-danger">Eliminar</button>
-                                    </td>
-                                </tr>
-                            @endforeach --}}
-                        </tbody>
+                        @foreach ($usuarios->where('status', 1) as $usuario)
+                            <tr>
+                                <td>{{ $usuario->id }}</td>
+                                <td>{{ $usuario->name }}</td>
+                                <td>{{ $usuario->email }}</td>
+                                <td>{{ $usuario->role }}</td>
+                                <td><span class="label label-success">Activo</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary">Editar</button>
+                                    <button class="btn btn-sm btn-danger">Eliminar</button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+
+                <div class="col-md-12" style='margin-top: 2em;  margin-bottom: 5em;'>
+                    <table id="tblDisabledUsers" class="table table-striped table-hover " style="width:90%" name="miTabla">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Rol</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        @foreach ($usuarios->where('status', 0) as $usuario)
+                            <tr>
+                                <td>{{ $usuario->id }}</td>
+                                <td>{{ $usuario->name }}</td>
+                                <td>{{ $usuario->email }}</td>
+                                <td>{{ $usuario->role }}</td>
+                                <td><span class="label label-success">Inactivo</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary">Editar</button>
+                                    <button class="btn btn-sm btn-danger">Eliminar</button>
+                                </td>
+                            </tr>
+                        @endforeach
                     </table>
                 </div>
             </div>
@@ -46,44 +75,13 @@
 
 @section('scripts')
     <script>
-         $(document).ready(function() {
-            $('#tableUsurios').DataTable({
-                "language": {
-                    "decimal": "",
-                    "emptyTable": "No hay datos disponibles en la tabla",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-                    "infoFiltered": "(filtrado de _MAX_ registros en total)",
-                    "lengthMenu": "Mostrar _MENU_ registros",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "zeroRecords": "No se encontraron resultados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Último",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    },
-                    "aria": {
-                        "sortAscending": ": Activar para ordenar la columna de manera ascendente",
-                        "sortDescending": ": Activar para ordenar la columna de manera descendente"
-                    }
-                }
+        $(document).ready(function() {
+            $(document).ready(function() {
+                $('#tblActiveUsers').DataTable();
+            });
+            $(document).ready(function() {
+                $('#tblDisabledUsers').DataTable();
             });
         });
-        //Editar Sucursales ===================================
-        // $(".table").on('click', '.btnEditarSucursal', function() {
-        //     let idSucursal = $(this).attr('idSucursal');
-
-        //     $.ajax({
-        //         url: 'branches/' + idSucursal + '/edit',
-        //         type: 'GET',
-        //         success: function(sucursal) {
-        //             $("#nombreEditar").val(sucursal.name);
-        //             $("#idEditar").val(sucursal.id);
-        //         }
-        //     })
-        // })
     </script>
 @endsection

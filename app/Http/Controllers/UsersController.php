@@ -13,7 +13,8 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return view('modules.users.users');
+        $usuarios = User::all(); // Puedes usar filtros si lo deseas
+        return view('modules.users.users', compact('usuarios'));
     }
 
     /**
@@ -64,7 +65,8 @@ class UsersController extends Controller
         //
     }
 
-    public function firstUser(){
+    public function firstUser()
+    {
         User::create([
             'name' => 'Roberto Ricardo Lira González',
             'email' => 'roberto.lira@pjedomex.gob.mx',

@@ -28,9 +28,9 @@
     <!-- Daterange picker -->
     <link rel="stylesheet" href="{{ url('bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
     {{-- SweetAlert2 --}}
-    <link rel="stylesheet" href="{{ url('../node_modules\sweetalert2\dist\sweetalert2.min.css') }}">
+    <link rel="stylesheet" href="{{ url('../node_modules/sweetalert2/dist/sweetalert2.min.css') }}">
     <!-- DataTables -->
-    <link rel="stylesheet" href="{{ url('bower_components/datatables.net-bs/css/dataTables.bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -75,7 +75,6 @@
         @yield('login')
     @endif
 
-
     <!-- jQuery 3 -->
     <script src="{{ url('bower_components/jquery/dist/jquery.min.js') }}"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -109,10 +108,10 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{ url('dist/js/demo.js') }}"></script>
     {{-- SweetAlert2 --}}
-    <script src="{{ url('../node_modules\sweetalert2\dist\sweetalert2.min.js') }}"></script>
+    <script src="{{ url('../node_modules/sweetalert2/dist/sweetalert2.min.js') }}"></script>
     {{-- DataTables --}}
-    <script src="{{ url('bower_components/datatables.net-bs/js/dataTables.bootstrap.js') }}"></script>
-
+    <script src="{{ url('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 
     @yield('scripts')
 

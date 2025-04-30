@@ -22,3 +22,4 @@ Route::get('/content/users', [UsersController::class, 'index'])->name('users.ind
 Route::get('/content/branches', [BranchesController::class, 'index'])->name('branches.index');
 Route::get('/content/products', [ProductsController::class, 'index'])->name('products.index');
 
+
