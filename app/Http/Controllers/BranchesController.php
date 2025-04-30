@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
-class UsersController extends Controller
+class BranchesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('modules.users.users');
+        return view('modules.users.branches');
     }
 
     /**
@@ -62,21 +60,5 @@ class UsersController extends Controller
     public function destroy(string $id)
     {
         //
-    }
-
-    public function firstUser(){
-        User::create([
-            'name' => 'Roberto Ricardo Lira González',
-            'email' => 'roberto.lira@pjedomex.gob.mx',
-            'password' => Hash::make('roberto.lira'),
-            'role' => 'Administrador',
-            'status' => 1,
-            'photo' => '',
-            'id_branch' => 1,
-            'last_login' => '',
-        ]);
-        return response()->json([
-            'message' => 'User created successfully',
-        ]);
     }
 }

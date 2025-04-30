@@ -29,6 +29,8 @@
     <link rel="stylesheet" href="{{ url('bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
     {{-- SweetAlert2 --}}
     <link rel="stylesheet" href="{{ url('../node_modules\sweetalert2\dist\sweetalert2.min.css') }}">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ url('bower_components/datatables.net-bs/css/dataTables.bootstrap.css') }}">
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -108,6 +110,9 @@
     <script src="{{ url('dist/js/demo.js') }}"></script>
     {{-- SweetAlert2 --}}
     <script src="{{ url('../node_modules\sweetalert2\dist\sweetalert2.min.js') }}"></script>
+    {{-- DataTables --}}
+    <script src="{{ url('bower_components/datatables.net-bs/js/dataTables.bootstrap.js') }}"></script>
+
 
     @yield('scripts')
 

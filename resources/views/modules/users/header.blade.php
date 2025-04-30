@@ -40,7 +40,6 @@
                             <p>
                                 <span class="hidden-xs">{{ Auth::user()->name }}<br><b>Web Developer</b></span>
                             </p>
-
                         </li>
                         <!-- Menu Body -->
                         <li class="user-body">
