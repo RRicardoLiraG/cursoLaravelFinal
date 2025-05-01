@@ -37,7 +37,9 @@
                                 <td style="white-space: nowrap;"> <!-- Evita saltos de línea -->
                                     <div class="btn-group" role="group">
                                         <!-- Botón Editar -->
-                                        <button class="btn btn-sm btn-primary" style="margin-right: 5px;">
+                                        <button class="btn btn-sm btn-primary edit-user-btn" style="margin-right: 5px;"
+                                            data-user-id="{{ $usuario->id }}" data-user-name="{{ $usuario->name }}"
+                                            data-user-email="{{ $usuario->email }}" data-user-role="{{ $usuario->role }}">
                                             <i class="fa fa-edit"></i> Editar
                                         </button>
 
@@ -83,7 +85,9 @@
                                 <td style="white-space: nowrap;"> <!-- Evita saltos de línea -->
                                     <div class="btn-group" role="group">
                                         <!-- Botón Editar -->
-                                        <button class="btn btn-sm btn-primary" style="margin-right: 5px;">
+                                        <button class="btn btn-sm btn-primary edit-user-btn" style="margin-right: 5px;"
+                                            data-user-id="{{ $usuario->id }}" data-user-name="{{ $usuario->name }}"
+                                            data-user-email="{{ $usuario->email }}" data-user-role="{{ $usuario->role }}">
                                             <i class="fa fa-edit"></i> Editar
                                         </button>
 
@@ -123,17 +127,17 @@
                     <form id="addUserForm" action="{{ route('users.store') }}" method="POST">
                         @csrf
                         <div class="form-group">
-                            <label for="name">Nombre</label>
+                            <label for="name">Nombre: </label>
                             <input type="text" class="form-control" id="name" placeholder="Nombre" name="name">
                             <br>
-                            <label for="email">Correo</label>
+                            <label for="email">Correo: </label>
                             <input type="email" class="form-control" id="email" placeholder="Correo" name="email">
                             <br>
-                            <label for="password">Contraseña</label>
+                            <label for="password">Contraseña: </label>
                             <input type="password" class="form-control" id="password" placeholder="Contraseña"
                                 name="password">
                             <br>
-                            <label for="role">Rol</label>
+                            <label for="role">Rol: </label>
                             <select class="form-control" id="role" name="role">
                                 <option value="" disabled selected>Selecciona un rol</option>
                                 <option value="Administrativo">Administrador</option>
@@ -146,6 +150,49 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-primary" form="addUserForm">Guardar cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- Modal de edición --}}
+    <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="editUserModalLabel">Editar Usuario</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="editUserForm" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="form-group">
+                            <label for="edit_name">Nombre</label>
+                            <input type="text" class="form-control" id="edit_name" name="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_email">Correo</label>
+                            <input type="email" class="form-control" id="edit_email" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_role">Rol</label>
+                            <select class="form-control" id="edit_role" name="role">
+                                <option value="Administrativo">Administrador</option>
+                                <option value="Usuario">Usuario</option>
+                                <option value="Invitado">Invitado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_password">Nueva Contraseña (dejar en blanco para no cambiar)</label>
+                            <input type="password" class="form-control" id="edit_password" name="password">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" form="editUserForm">Guardar Cambios</button>
                 </div>
             </div>
         </div>
@@ -228,6 +275,62 @@
                 }
             });
 
+            // Manejo del modal de edición
+            $('.edit-user-btn').click(function() {
+                const userId = $(this).data('user-id');
+                const userName = $(this).data('user-name');
+                const userEmail = $(this).data('user-email');
+                const userRole = $(this).data('user-role');
+
+                // Llenar el formulario
+                $('#edit_name').val(userName);
+                $('#edit_email').val(userEmail);
+                $('#edit_role').val(userRole);
+                $('#edit_password').val('');
+
+                // Usando la función route de Laravel
+                const updateRoute = "{{ route('users.update', ':id') }}".replace(':id', userId);
+                $('#editUserForm').attr('action', updateRoute);
+
+                // Mostrar modal
+                $('#editUserModal').modal('show');
+            });
+
+            // Validación del formulario de edición
+            $('#editUserForm').on('submit', function(e) {
+                e.preventDefault();
+
+                if ($('#edit_name').val() === '' || $('#edit_email').val() === '') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Nombre y correo son campos obligatorios'
+                    });
+                    return;
+                }
+
+                this.submit();
+            });
+
         });
+
+        @if (session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: '{{ session('success') }}',
+                timer: 3000,
+                showConfirmButton: false
+            });
+        @endif
+
+        @if (session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: '¡Error!',
+                text: '{{ session('error') }}',
+                timer: 4000
+            });
+        @endif
     </script>
 @endsection

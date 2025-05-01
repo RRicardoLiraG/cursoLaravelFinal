@@ -13,7 +13,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $usuarios = User::all(); // Puedes usar filtros si lo deseas
+        $usuarios = User::all();
         return view('modules.users.users', compact('usuarios'));
     }
 
@@ -50,7 +50,7 @@ class UsersController extends Controller
         $usuarios->created_at = now();
         $usuarios->save();
 
-        return redirect()->route('modules.users.users')->with('success', 'Producto creado satisfactoriamente.');
+        return redirect()->route('users.index')->with('success', 'Usuario agregado satisfactoriamente.');
     }
 
     /**
@@ -74,7 +74,25 @@ class UsersController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id . ',id',
+            'password' => 'nullable|min:6',
+            'role' => 'required|in:Administrativo,Usuario,Invitado'
+        ]);
+
+
+        $user = User::findOrFail($id);
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        $user->role = $validated['role'];
+
+        if (!empty($validated['password'])) {
+            $user->password = Hash::make($validated['password']);
+        }
+
+        $user->save();
+        return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente');
     }
 
     /**

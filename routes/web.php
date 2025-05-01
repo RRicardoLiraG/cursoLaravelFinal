@@ -25,6 +25,6 @@ Route::get('/content/products', [ProductsController::class, 'index'])->name('pro
 Route::post('content/users', [UsersController::class, 'store'])->name('users.store');
 Route::put('/content/users/{id}/deactivate', [UsersController::class, 'deactivate'])->name('users.deactivate');
 Route::put('/content/users/{id}/activate', [UsersController::class, 'activate'])->name('users.activate');
-Route::put('/content/users/{id}/update', [UsersController::class, 'update'])->name('users.update');
+Route::put('/content/users/{id}', [UsersController::class, 'update'])->name('users.update');
 
 
