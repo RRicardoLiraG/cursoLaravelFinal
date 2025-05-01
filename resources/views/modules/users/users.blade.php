@@ -34,12 +34,29 @@
                                 <td>{{ $usuario->email }}</td>
                                 <td>{{ $usuario->role }}</td>
                                 <td><span class="label label-success">Activo</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary">Editar</button>
-                                    <button class="btn btn-sm btn-danger">Eliminar</button>
+                                <td style="white-space: nowrap;"> <!-- Evita saltos de línea -->
+                                    <div class="btn-group" role="group">
+                                        <!-- Botón Editar -->
+                                        <button class="btn btn-sm btn-primary" style="margin-right: 5px;">
+                                            <i class="fa fa-edit"></i> Editar
+                                        </button>
+
+                                        <!-- Botón Desactivar -->
+                                        <form action="{{ route('users.deactivate', $usuario->id) }}" method="POST"
+                                            class="d-inline">
+                                            @csrf
+                                            @method('PUT')
+                                            <button type="submit" class="btn btn-sm btn-warning">
+                                                <i class="fa fa-ban"></i> Desactivar
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
+                        {{-- <form id="formDelete" action="{{ route('content/users/{id}/delete') }}" method="POST"> --}}
+
+                        </form>
                     </table>
                 </div>
                 <h2>Tabla de Usuarios Inactivos</h2>
@@ -63,9 +80,23 @@
                                 <td>{{ $usuario->email }}</td>
                                 <td>{{ $usuario->role }}</td>
                                 <td><span class="label label-danger">Inactivo</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary">Editar</button>
-                                    <button class="btn btn-sm btn-danger">Eliminar</button>
+                                <td style="white-space: nowrap;"> <!-- Evita saltos de línea -->
+                                    <div class="btn-group" role="group">
+                                        <!-- Botón Editar -->
+                                        <button class="btn btn-sm btn-primary" style="margin-right: 5px;">
+                                            <i class="fa fa-edit"></i> Editar
+                                        </button>
+
+                                        <!-- Botón Activar -->
+                                        <form action="{{ route('users.activate', $usuario->id) }}" method="POST"
+                                            class="d-inline">
+                                            @csrf
+                                            @method('PUT')
+                                            <button type="submit" class="btn btn-sm btn-warning">
+                                                <i class="fa fa-check"></i> Activar
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

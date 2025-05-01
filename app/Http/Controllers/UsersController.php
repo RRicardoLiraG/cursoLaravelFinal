@@ -101,4 +101,22 @@ class UsersController extends Controller
             'message' => 'User created successfully',
         ]);
     }
+
+    public function deactivate($id)
+    {
+        $user = User::findOrFail($id);
+        $user->status = 0; // Cambia el estado a inactivo
+        $user->save();
+
+        return redirect()->route('users.index')->with('success', 'Usuario desactivado satisfactoriamente.');
+    }
+
+    public function activate($id)
+    {
+        $user = User::findOrFail($id);
+        $user->status = 1; // Cambia el estado a activo
+        $user->save();
+
+        return redirect()->route('users.index')->with('success', 'Usuario activado satisfactoriamente.');
+    }
 }

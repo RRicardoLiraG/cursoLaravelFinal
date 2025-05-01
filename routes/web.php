@@ -23,9 +23,8 @@ Route::get('/content/branches', [BranchesController::class, 'index'])->name('bra
 Route::get('/content/products', [ProductsController::class, 'index'])->name('products.index');
 
 Route::post('content/users', [UsersController::class, 'store'])->name('users.store');
-Route::get('content/users/{id}', [UsersController::class, 'show'])->name('users.show');
-Route::put('content/users/{id}', [UsersController::class, 'update'])->name('users.update');
-
-Route::delete('content/users/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
+Route::put('/content/users/{id}/deactivate', [UsersController::class, 'deactivate'])->name('users.deactivate');
+Route::put('/content/users/{id}/activate', [UsersController::class, 'activate'])->name('users.activate');
+Route::put('/content/users/{id}/update', [UsersController::class, 'update'])->name('users.update');
 
 
